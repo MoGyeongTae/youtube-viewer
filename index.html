@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>일렉트론 앱 테스트</title>
+  <title>유튜브 뷰어 - Made By MGT</title>
   <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script>
     var axios = require("axios");
     var prompt = require("electron-prompt")
     var notifier = require('electron-notification-desktop')
+    var _ = require("lodash");
+    var ElectronTitlebarWindows = require("electron-titlebar-windows")
   </script>
   <script src="ui-compiled.js"></script>
   <link rel="stylesheet" href="./index.css">
@@ -24,6 +26,7 @@
   <!-- <iframe width="420" height="315"
     src="https://www.youtube.com/embed/oHURnibetiA?autoplay=1">
   </iframe> -->
-  <div id="root"></div>
+  <div id="root">
+  </div>
 </body>
 </html>

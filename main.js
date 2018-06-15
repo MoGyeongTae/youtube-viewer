@@ -12,10 +12,11 @@ app.on("window-all-closed",function(){
 
 app.on("ready",function() {
   mainWindow = new BrowserWindow({width : 1000, height : 700});
+  mainWindow.setMenu(null)
 
   mainWindow.loadURL('file://' + __dirname + "/index.html");
 
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
   mainWindow.on("closed",function() {
     mainWindow = null;
   })

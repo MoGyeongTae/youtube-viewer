@@ -1,3 +1,31 @@
+*:focus {
+  outline : none;
+}
+
+::-webkit-scrollbar {
+      display:none;
+}
+
+::-webkit-scrollbar-track {
+      background-color: #061833;
+} /* the new scrollbar will have a flat appearance with the set background color */
+
+::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+} /* this will style the thumb, ignoring the track */
+
+::-webkit-scrollbar-button {
+      background-color: #072b60;
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+
+::-webkit-scrollbar-corner {
+      background-color: black;
+} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+
+button {
+  cursor:pointer;
+}
+
 #root {
   width : 100%;
   height : 100%;
@@ -14,13 +42,166 @@ html, body {
 }
 
 .leftBox {
-  width : 20%;
+  width : 25%;
   height : 100%;
   float:left;
+  background-image:url("./images/space.jpg");
+  background-size:cover;
+  background-position:center;
 }
 
 .rightBox {
-  width : 80%;
+  width : 75%;
   height : 100%;
   float:left;
+  background-color:#070c14;
+}
+
+.musicListBox {
+  width : 100%;
+  height : 60%;
+}
+
+.musicList {
+  width: 100%;
+  height: 100%;
+  overflow-y:scroll;
+}
+
+.musicList table {
+  width:100%;
+  color:white;
+  font-size:0.8rem;
+  text-align:center;
+}
+
+
+.frameBox {
+  width : 100%;
+  height : 20%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  position:relative;
+}
+
+.frameBox iframe {
+  position:absolute;
+  width:70%;
+  height:70%;
+}
+
+.buttonBox {
+  width:100%;
+  height:10%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonBox button {
+  width : 25px;
+  height : 25px;
+  border-radius:25px;
+  border : 0;
+  margin : 5%;
+  background-color:#070c14;
+  color:white;
+}
+
+.searchBox {
+  width : 100%;
+  height : 5%;
+}
+.searchBox input {
+  width : 85%;
+  height : 100%;
+  border : 0;
+  margin-left : 2.5%;
+  border-bottom : 1px solid white;
+  background-color:#070c14;
+  color:white;
+}
+
+.searchBox button {
+  width : 10%;
+  float:right;
+  height : 100%;
+  border : 0;
+  color : white;
+  background-color:#14223a;
+}
+
+.searchBox button:active {
+  background-color : #070c14;
+}
+
+.listBox {
+  width : 100%;
+  height : 95%;
+  overflow-y : scroll;
+}
+
+.searchList {
+  width : 100%;
+  height: 10%;
+}
+
+.searchList:nth-child(odd) {
+  background-color:#091221;
+}
+
+.searchListImg {
+  display:flex;
+  float:left;
+  justify-content: center;
+  align-items: center;
+  width:10%;
+  height:100%;
+  margin-left : 5%;
+  position:relative;
+}
+
+.searchListImg img {
+  position:absolute;
+  width:80%;
+  height:80%;
+}
+
+.searchTitle {
+  text-align:center;
+  color:white;
+  width : 70%;
+  height : 100%;
+  font-size:0.75rem;
+  float:left;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.musicAdd {
+  width : 15%;
+  height:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  float:left;
+}
+
+.musicAdd button {
+  background-color:white;
+  border : 0;
+  width : 50%;
+  height : 50%;
+}
+
+.title {
+  width : 100%;
+  height : 10%;
+  color:white;
+  background-color:rgba(0,0,0,0.5);
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
