@@ -28,18 +28,6 @@ var LeftBox = function (_React$Component) {
 
     _this.skipVideo = function () {};
 
-    _this.onYouTubeIframeAPIReady = function () {
-      var player = new YT.Player(_this.frame.current, {
-        height: '360',
-        width: '640',
-        videoId: 'M7lc1UVf-VE',
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    };
-
     _this.chkVideo = function () {
       if (!_this.props.musicList[0]) {
         return;
@@ -66,7 +54,7 @@ var LeftBox = function (_React$Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       this.chkVideo();
-      console.log(this.frame.current.contentWindow.postMessage('{"event" : "command", "func" : "getPlayerState", "args" : ""}', "*"));
+      var a = this.frame.current.contentWindow.postMessage('{"event" : "command", "func" : "getPlayerState", "args" : ""}', "*");
     }
   }, {
     key: 'componentDidMount',
