@@ -2,6 +2,36 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _electronPrompt = require('electron-prompt');
+
+var _electronPrompt2 = _interopRequireDefault(_electronPrompt);
+
+var _electronNotificationDesktop = require('electron-notification-desktop');
+
+var _electronNotificationDesktop2 = _interopRequireDefault(_electronNotificationDesktop);
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _reactYoutube = require('react-youtube');
+
+var _reactYoutube2 = _interopRequireDefault(_reactYoutube);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9,6 +39,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var remote = require("electron").remote;
 
 var LeftBox = function (_React$Component) {
   _inherits(LeftBox, _React$Component);
@@ -19,14 +51,27 @@ var LeftBox = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (LeftBox.__proto__ || Object.getPrototypeOf(LeftBox)).call(this, props));
 
     _this.stopVideo = function () {
-      _this.frame.current.contentWindow.postMessage('{"event" : "command", "func" : "pauseVideo", "args" : ""}', "*");
+      _this.frame.current.pauseVideo();
     };
 
     _this.startVideo = function () {
-      _this.frame.current.contentWindow.postMessage('{"event" : "command", "func" : "playVideo", "args" : ""}', "*");
+      _this.frame.current.playVideo();
     };
 
-    _this.skipVideo = function () {};
+    _this.skipVideo = function () {
+      var len = _this.props.musicList.length - 1;
+      if (len >= _this.state.currentPlayIdx + 1) {
+        _this.setState({
+          currentPlayIdx: _this.state.currentPlayIdx + 1
+        });
+      } else if (len < _this.state.currentPlayIdx + 1) {
+        _this.setState({
+          currentPlayIdx: 0
+        });
+      } else {
+        console.log("asdf");
+      }
+    };
 
     _this.chkVideo = function () {
       if (!_this.props.musicList[0]) {
@@ -34,17 +79,17 @@ var LeftBox = function (_React$Component) {
       }
 
       if (_this.props.musicList[0] && !_this.state.playing) {
-        _this.frame.current.src = 'https://www.youtube.com/embed/' + _this.props.musicList[0].id.videoId + '?autoplay=1&version=3&enablejsapi=1&playerapiid=ytplayer';
         _this.setState({
+          currentPlayIdx: 0,
           playing: true
         });
       }
     };
 
-    _this.frame = React.createRef();
+    _this.frame = _react2.default.createRef();
 
     _this.state = {
-      currentPlayIdx: 0,
+      currentPlayIdx: -1,
       playing: false
     };
     return _this;
@@ -54,7 +99,6 @@ var LeftBox = function (_React$Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       this.chkVideo();
-      var a = this.frame.current.contentWindow.postMessage('{"event" : "command", "func" : "getPlayerState", "args" : ""}', "*");
     }
   }, {
     key: 'componentDidMount',
@@ -64,54 +108,61 @@ var LeftBox = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return React.createElement(
+      var currentPlayIdx = this.state.currentPlayIdx;
+
+      var frameOptions = {
+        playerVars: {
+          autoplay: 1
+        }
+      };
+      return _react2.default.createElement(
         'div',
         { className: 'leftBox' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'title' },
           'Youtube Viewer'
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'musicListBox' },
-          React.createElement(
+          _react2.default.createElement(
             'div',
             { className: 'musicList' },
-            React.createElement(
+            _react2.default.createElement(
               'table',
               null,
-              React.createElement(
+              _react2.default.createElement(
                 'thead',
                 null,
-                React.createElement(
+                _react2.default.createElement(
                   'tr',
                   null,
-                  React.createElement(
+                  _react2.default.createElement(
                     'th',
                     { width: '20%', height: '70' },
                     '#'
                   ),
-                  React.createElement(
+                  _react2.default.createElement(
                     'th',
                     { width: '80%', height: '70' },
                     'Title'
                   )
                 )
               ),
-              React.createElement(
+              _react2.default.createElement(
                 'tbody',
                 null,
                 this.props.musicList.map(function (item, idx) {
-                  return React.createElement(
+                  return _react2.default.createElement(
                     'tr',
                     { key: idx, className: _this2.state.currentPlayIdx == idx ? "currentPlaying" : "" },
-                    React.createElement(
+                    _react2.default.createElement(
                       'td',
                       { width: '20%', height: '50' },
                       idx + 1
                     ),
-                    React.createElement(
+                    _react2.default.createElement(
                       'td',
                       { width: '80%', height: '50' },
                       item.snippet.title
@@ -122,25 +173,29 @@ var LeftBox = function (_React$Component) {
             )
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'frameBox' },
-          React.createElement('iframe', { frameBorder: '0', src: '', ref: this.frame })
+          _react2.default.createElement(_reactYoutube2.default, { ref: this.frame,
+            videoId: currentPlayIdx == -1 ? "" : this.props.musicList[currentPlayIdx].id.videoId,
+            opts: frameOptions,
+            onEnd: this.skipVideo
+          })
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'buttonBox' },
-          React.createElement(
+          _react2.default.createElement(
             'button',
             { onClick: this.stopVideo },
             '||'
           ),
-          React.createElement(
+          _react2.default.createElement(
             'button',
             { onClick: this.startVideo },
             '\u25B6'
           ),
-          React.createElement(
+          _react2.default.createElement(
             'button',
             { onClick: this.skipVideo },
             'Skip'
@@ -151,7 +206,7 @@ var LeftBox = function (_React$Component) {
   }]);
 
   return LeftBox;
-}(React.Component);
+}(_react2.default.Component);
 
 var RightBox = function (_React$Component2) {
   _inherits(RightBox, _React$Component2);
@@ -168,7 +223,7 @@ var RightBox = function (_React$Component2) {
     };
 
     _this3.search = function () {
-      axios.get('https://www.googleapis.com/youtube/v3/search?key=AIzaSyBKb3i3heKckuSAHP32TmeBqSRczXukJQo&part=snippet&q=' + _this3.state.key).then(function (data) {
+      _axios2.default.get('https://www.googleapis.com/youtube/v3/search?key=AIzaSyBKb3i3heKckuSAHP32TmeBqSRczXukJQo&part=snippet&q=' + _this3.state.key).then(function (data) {
         _this3.setState({
           list: data.data.items
         });
@@ -194,44 +249,44 @@ var RightBox = function (_React$Component2) {
     value: function render() {
       var _this4 = this;
 
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'rightBox' },
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'searchBox' },
-          React.createElement('input', { type: 'text', onChange: this.searchChange, value: this.state.key }),
-          React.createElement(
+          _react2.default.createElement('input', { type: 'text', onChange: this.searchChange, value: this.state.key }),
+          _react2.default.createElement(
             'button',
             { onClick: this.search },
             '\uAC80\uC0C9'
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'listBox' },
           this.state.list.map(function (item, idx) {
-            return React.createElement(
+            return _react2.default.createElement(
               'div',
               { className: 'searchList', key: idx },
-              React.createElement(
+              _react2.default.createElement(
                 'div',
                 { className: 'searchListImg' },
-                React.createElement('img', { src: item.snippet.thumbnails.medium.url })
+                _react2.default.createElement('img', { src: item.snippet.thumbnails.medium.url })
               ),
-              React.createElement(
+              _react2.default.createElement(
                 'div',
                 { className: 'searchTitle' },
-                React.createElement(
+                _react2.default.createElement(
                   'p',
                   null,
                   item.snippet.title
                 )
               ),
-              React.createElement(
+              _react2.default.createElement(
                 'div',
                 { className: 'musicAdd' },
-                React.createElement(
+                _react2.default.createElement(
                   'button',
                   { onClick: function onClick() {
                       return _this4.musicAdd(idx);
@@ -247,7 +302,7 @@ var RightBox = function (_React$Component2) {
   }]);
 
   return RightBox;
-}(React.Component);
+}(_react2.default.Component);
 
 // Main Component
 
@@ -277,19 +332,19 @@ var App = function (_React$Component3) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'wrap' },
-        React.createElement(LeftBox, { musicList: this.state.currentMusicList }),
-        React.createElement(RightBox, { musicAdd: this.musicAdd })
+        _react2.default.createElement(LeftBox, { musicList: this.state.currentMusicList }),
+        _react2.default.createElement(RightBox, { musicAdd: this.musicAdd })
       );
     }
   }]);
 
   return App;
-}(React.Component);
+}(_react2.default.Component);
 
 window.onload = function () {
   var root = document.getElementById("root");
-  ReactDOM.render(React.createElement(App, null), root);
+  _reactDom2.default.render(_react2.default.createElement(App, null), root);
 };

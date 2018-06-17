@@ -85,10 +85,17 @@ html, body {
   position:relative;
 }
 
+
 .frameBox iframe {
   position:absolute;
   width:70%;
   height:70%;
+  left : 15%;
+  top:15%;
+}
+
+.currentPlaying {
+  background-color:rgba(0,0,0,0.5)
 }
 
 .buttonBox {

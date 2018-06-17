@@ -5,26 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>유튜브 뷰어 - Made By MGT</title>
-  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-  <script>
-    var axios = require("axios");
-    var prompt = require("electron-prompt")
-    var notifier = require('electron-notification-desktop')
-    var _ = require("lodash");
-    var ElectronTitlebarWindows = require("electron-titlebar-windows")
-  </script>
-  <script src="ui-compiled.js"></script>
   <script src="https://www.youtube.com/player_api"></script>
-  <script>
-  function onYouTubePlayerAPIReady() {
-    player = new YT.Player('ytplayer', {
-      height: '360',
-      width: '640',
-      videoId: 'M7lc1UVf-VE'
-    });
-  }
-  </script>
+  <script src="ui-compiled.js"></script>
   <link rel="stylesheet" href="./index.css">
   <style>
   * {
